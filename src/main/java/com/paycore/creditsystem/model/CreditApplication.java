@@ -1,13 +1,17 @@
 package com.paycore.creditsystem.model;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "credits")
-public class Credit {
+public class CreditApplication {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

@@ -1,13 +1,17 @@
 package com.paycore.creditsystem.model;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "customers")
 public class Customer {
 
@@ -30,12 +34,25 @@ public class Customer {
     @Column(name ="phone")
     private String phone;
 
-    @Column(name ="credit_score")
-    private Integer creditScore;
+    @JsonIgnore
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "score_id", referencedColumnName = "id")
+    private CreditScore creditScore;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "customer", cascade = CascadeType.MERGE)
-    private List<Credit> credits;
+    @OneToMany(mappedBy = "customer", cascade = CascadeType.ALL)
+    private List<CreditApplication> credits;
 
-    //creditle bağlantısını yap
+
+    @Override
+    public String toString() {
+        return "Customer{" +
+                "id=" + id +
+                ", identityNumber='" + identityNumber + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", monthlyIncome='" + monthlyIncome + '\'' +
+                ", phone='" + phone + '\'' +
+                '}';
+    }
 }
