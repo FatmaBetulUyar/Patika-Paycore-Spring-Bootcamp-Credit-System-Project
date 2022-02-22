@@ -19,13 +19,27 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping(value = "/get")
-    public Customer getCustomer(Integer id){
-        return customerService.getCustomer(id);
+    public ResponseEntity<?> getCustomer(Integer id){
+        ResponseEntity<?> response;
+        try{
+            response=new ResponseEntity<>(customerService.getCustomer(id),HttpStatus.OK);
+        }catch(Exception exception){
+            response=new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+        return response ;
     }
+
+
 
     @PostMapping(value = "/add")
     public ResponseEntity<?> addCustomer(@Valid @RequestBody CustomerDto customer){
-       return new ResponseEntity<>(customerService.addCustomer(customer), HttpStatus.OK) ;
+        ResponseEntity<?> response;
+        try{
+            response=new ResponseEntity<>(customerService.addCustomer(customer), HttpStatus.OK);
+        }catch (Exception exception){
+            response=new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
+        }
+       return response ;
     }
 
     @DeleteMapping(value = "/delete")

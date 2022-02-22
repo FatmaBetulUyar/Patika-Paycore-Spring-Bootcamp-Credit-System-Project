@@ -1,6 +1,7 @@
 package com.paycore.creditsystem.service.iml;
 
 import com.paycore.creditsystem.exception.InsufficientCreditScoreException;
+import com.paycore.creditsystem.exception.NotFoundException;
 import com.paycore.creditsystem.model.CreditApplication;
 import com.paycore.creditsystem.model.Customer;
 import com.paycore.creditsystem.model.mapper.CustomerMapper;
@@ -13,6 +14,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,15 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     private final CreditApplicationRepository creditApplicationRepository;
     private final MessageService messageService;
     private final CreditScoreService creditScoreService;
+
+    @Override
+    public List<CreditApplication> getCreditApplication(String identityNumber) {
+        List<CreditApplication>creditApplications= creditApplicationRepository.findByCustomer_IdentityNumber(identityNumber);
+        if(creditApplications.size()==0){
+            throw new NotFoundException("Customer that has this identity number");
+        }
+        return creditApplications;
+    }
 
     @Override
     public void addCreditApplication(String identityNumber) {
@@ -34,9 +45,10 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
         creditApplication= creditApplicationRepository.save(creditApplication);
         if(creditApplication.getCreditLimit()==0){
             creditApplication.setStatus(false);
-            messageService.sendMessage(customer.getPhone(),"");
-            new InsufficientCreditScoreException();
+            messageService.sendMessage(customer.getPhone(),false,creditApplication.getCreditLimit());
+            throw new InsufficientCreditScoreException();
         }
+        messageService.sendMessage(customer.getPhone(),true,creditApplication.getCreditLimit());
         List<CreditApplication> credits=customerService.getCustomerByIdentityNumber(identityNumber).getCredits();
         credits.add(creditApplication);
         customer.setCredits(credits);

@@ -20,9 +20,12 @@ public class CreditScoreServiceImpl implements CreditScoreService {
     }
 
     @Override
-    public Integer calculateCreditScore() {
+    public CreditScore calculateCreditScore() {
+        CreditScore entitiy = new CreditScore();
         int creditScore = (int) ((Math.random() * (2000 - 0)) + 0);
-        return creditScore;
+        entitiy.setCreditScore(creditScore);
+
+        return creditScoreRepository.save(entitiy);
     }
 
     @Override
@@ -30,4 +33,6 @@ public class CreditScoreServiceImpl implements CreditScoreService {
         CreditScore creditScore=creditScoreRepository.findCreditScoreByCustomer_IdentityNumber(identityNumber);
         return creditScore.getCreditScore();
     }
+
+
 }

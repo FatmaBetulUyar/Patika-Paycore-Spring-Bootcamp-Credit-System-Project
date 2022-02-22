@@ -34,7 +34,7 @@ public class Customer {
     @Column(name ="phone")
     private String phone;
 
-    @JsonIgnore
+
     @OneToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "score_id", referencedColumnName = "id")
     private CreditScore creditScore;

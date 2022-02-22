@@ -11,4 +11,5 @@ import java.util.List;
 public interface CreditApplicationRepository extends JpaRepository<CreditApplication,Integer> {
 
     List<CreditApplication> findByCustomer(Customer customer);
+    List<CreditApplication> findByCustomer_IdentityNumber(String identityNumber);
 }

@@ -2,5 +2,5 @@ package com.paycore.creditsystem.service;
 
 public interface MessageService {
 
-    void sendMessage(String phone,String message);
+    String sendMessage(String phone,Boolean status,Float limit);
 }

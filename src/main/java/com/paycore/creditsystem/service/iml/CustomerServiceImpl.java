@@ -24,18 +24,15 @@ public class CustomerServiceImpl implements CustomerService {
     @Override
     public Customer getCustomer(Integer id) {
         Optional<Customer> byId= customerRepository.findById(id);
+
         return byId.orElseThrow(()->new NotFoundException("Customer"));
     }
 
     @Override
     public Customer addCustomer(CustomerDto customerDto) {
         Customer customer=CustomerMapper.toEntity(customerDto);
-        Integer calculatedCreditScore=creditScoreService.calculateCreditScore();
 
-        CreditScore creditScore=new CreditScore() ;
-        creditScore.setCreditScore(calculatedCreditScore);
-
-        creditScoreService.addCreditScore(creditScore);
+        CreditScore creditScore= creditScoreService.calculateCreditScore();
 
         customer.setCreditScore(creditScore);
 

@@ -6,7 +6,7 @@ public interface CreditScoreService {
 
     CreditScore addCreditScore(CreditScore creditScore);
 
-    Integer calculateCreditScore();
+    CreditScore calculateCreditScore();
 
     Integer getCreditScoreByCustomerIdentityNumber(String identityNumber);
 }

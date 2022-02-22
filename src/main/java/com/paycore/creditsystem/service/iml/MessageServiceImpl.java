@@ -9,8 +9,22 @@ import org.springframework.stereotype.Service;
 public class MessageServiceImpl implements MessageService {
 
     @Override
-    public void sendMessage(String phone,String message) {
-        System.out.println(phone + " numaralı telefona "+message+" mesajı gönderildi.");
+    public String sendMessage(String phone, Boolean status, Float limit) {
+        String statusTrue="CONSENT";
+        String statusFalse="DENIAL";
+        String message="";
+        if(status==true){
+            message= "Your credit application has been approved."+"\n"+
+                    "Application details :"+"\n"+
+                    "Status :"+statusTrue+"\n"+
+                    "Limit :"+limit;
+        }else{
+            message= "Sorry,your credit application has not been approved."+"\n"+
+                    "Application details :"+"\n"+
+                    "Status :"+statusFalse+"\n"+
+                    "Limit :"+limit;
+        }
+        System.out.println("A" +"\n"+ "'" +  message + "'"+"\n" + "message was sent to phone number "+ phone);
+        return message;
     }
-
 }
