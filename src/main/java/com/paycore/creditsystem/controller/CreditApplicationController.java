@@ -20,12 +20,7 @@ public class CreditApplicationController {
 
     @GetMapping(value = "/get_credit_application")
     public ResponseEntity<?> getCreditApplication(@Valid @RequestParam String identityNumber) {
-        ResponseEntity<?> response;
-        try{
-            response=new ResponseEntity<>(creditApplicationService.getCreditApplication(identityNumber),HttpStatus.OK);
-        } catch (Exception exception){
-            response=new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> response=new ResponseEntity<>(creditApplicationService.getCreditApplication(identityNumber),HttpStatus.OK);
         return response;
     }
 

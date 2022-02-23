@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@CrossOrigin
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/customer")
@@ -19,26 +20,14 @@ public class CustomerController {
     private final CustomerService customerService;
 
     @GetMapping(value = "/get")
-    public ResponseEntity<?> getCustomer(Integer id){
-        ResponseEntity<?> response;
-        try{
-            response=new ResponseEntity<>(customerService.getCustomer(id),HttpStatus.OK);
-        }catch(Exception exception){
-            response=new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+    public ResponseEntity<?> getCustomer(@RequestParam Integer id){
+        ResponseEntity<?> response=new ResponseEntity<>(customerService.getCustomer(id),HttpStatus.OK);
         return response ;
     }
 
-
-
     @PostMapping(value = "/add")
     public ResponseEntity<?> addCustomer(@Valid @RequestBody CustomerDto customer){
-        ResponseEntity<?> response;
-        try{
-            response=new ResponseEntity<>(customerService.addCustomer(customer), HttpStatus.OK);
-        }catch (Exception exception){
-            response=new ResponseEntity<>(exception.getMessage(),HttpStatus.BAD_REQUEST);
-        }
+        ResponseEntity<?> response=new ResponseEntity<>(customerService.addCustomer(customer), HttpStatus.OK);
        return response ;
     }
 
