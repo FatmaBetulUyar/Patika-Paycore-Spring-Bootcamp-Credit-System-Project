@@ -1,5 +1,6 @@
 package com.paycore.creditsystem.exception.handler;
 
+import com.paycore.creditsystem.exception.IdentityNumberAlreadyExistException;
 import com.paycore.creditsystem.exception.InsufficientCreditScoreException;
 import com.paycore.creditsystem.exception.NotFoundException;
 import org.springframework.http.HttpStatus;
@@ -20,6 +21,12 @@ public class GenericExceptionHandler {
     }
     @ExceptionHandler(InsufficientCreditScoreException.class)
     public ResponseEntity<Map> handleInsufficientCreditScoreException(InsufficientCreditScoreException exception) {
+        Map<String, String> response = new HashMap<>();
+        response.put("message", exception.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);
+    }
+    @ExceptionHandler(IdentityNumberAlreadyExistException.class)
+    public ResponseEntity<Map> handleInsufficientCreditScoreException(IdentityNumberAlreadyExistException exception) {
         Map<String, String> response = new HashMap<>();
         response.put("message", exception.getMessage());
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(response);

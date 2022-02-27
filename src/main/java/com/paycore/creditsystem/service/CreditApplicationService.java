@@ -8,5 +8,5 @@ public interface CreditApplicationService {
 
     List<CreditApplication> getCreditApplication(String identityNumber);
 
-    void addCreditApplication(String identityNumber);
+    boolean addCreditApplication(String identityNumber);
 }

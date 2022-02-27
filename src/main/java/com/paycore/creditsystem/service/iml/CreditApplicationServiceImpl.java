@@ -4,6 +4,8 @@ import com.paycore.creditsystem.exception.InsufficientCreditScoreException;
 import com.paycore.creditsystem.exception.NotFoundException;
 import com.paycore.creditsystem.model.CreditApplication;
 import com.paycore.creditsystem.model.Customer;
+import com.paycore.creditsystem.model.dto.ResponseDto;
+import com.paycore.creditsystem.model.mapper.CreditApplicationMapper;
 import com.paycore.creditsystem.model.mapper.CustomerMapper;
 import com.paycore.creditsystem.repository.CreditApplicationRepository;
 import com.paycore.creditsystem.service.CreditScoreService;
@@ -35,33 +37,31 @@ public class CreditApplicationServiceImpl implements CreditApplicationService {
     }
 
     @Override
-    public void addCreditApplication(String identityNumber) {
+    public boolean addCreditApplication(String identityNumber) {
         Customer customer=customerService.getCustomerByIdentityNumber(identityNumber);
-        CreditApplication creditApplication=new CreditApplication();
+        CreditApplication creditApplication=CreditApplicationMapper.mapCreditApplication(customer,calculateCreditLimit(customer),true);
 
-        creditApplication.setCreditLimit(calculateCreditLimit(customer));
-        creditApplication.setStatus(true);
-        creditApplication.setCustomer(customer);
         creditApplication= creditApplicationRepository.save(creditApplication);
-        if(creditApplication.getCreditLimit()==0){
-            creditApplication.setStatus(false);
+
+        if(!creditApplication.isStatus()){
             messageService.sendMessage(customer.getPhone(),false,creditApplication.getCreditLimit());
-            throw new InsufficientCreditScoreException();
         }
-        messageService.sendMessage(customer.getPhone(),true,creditApplication.getCreditLimit());
+        else{
+            messageService.sendMessage(customer.getPhone(),true,creditApplication.getCreditLimit());
+        }
         List<CreditApplication> credits=customerService.getCustomerByIdentityNumber(identityNumber).getCredits();
         credits.add(creditApplication);
         customer.setCredits(credits);
         customerService.updateCustomer(customer.getId(),customer);
+        return true;
     }
 
-
-
-    public Float calculateCreditLimit(Customer customer){
+    private Float calculateCreditLimit(Customer customer){
         Integer creditScore=creditScoreService.getCreditScoreByCustomerIdentityNumber(customer.getIdentityNumber());
         Float limit=0.0F;
         if(creditScore<500){
-            new InsufficientCreditScoreException();
+         //   new InsufficientCreditScoreException();
+            return limit;
         }
         else if(creditScore>500 && creditScore<1000){
            if(customer.getMonthlyIncome()<5000){

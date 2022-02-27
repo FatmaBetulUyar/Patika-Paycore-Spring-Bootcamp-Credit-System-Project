@@ -5,12 +5,14 @@ import com.paycore.creditsystem.model.dto.CustomerDto;
 import com.paycore.creditsystem.model.mapper.CustomerMapper;
 import com.paycore.creditsystem.service.CustomerService;
 import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
+@Slf4j
 @CrossOrigin
 @RestController
 @RequiredArgsConstructor
@@ -32,12 +34,15 @@ public class CustomerController {
     }
 
     @DeleteMapping(value = "/delete")
-    public void deleteCustomer(Integer id){
-        customerService.deleteCustomer(id);
+    public boolean deleteCustomer(@RequestParam Integer id){
+       return customerService.deleteCustomer(id);
     }
 
     @PutMapping("/update")
-    public void updateCustomer(Integer id,Customer customer){
-        customerService.updateCustomer(id,customer);
+    public Customer updateCustomer(@Valid @RequestParam Integer id,Customer customer){
+       return customerService.updateCustomer(id,customer);
     }
 }
+
+
+

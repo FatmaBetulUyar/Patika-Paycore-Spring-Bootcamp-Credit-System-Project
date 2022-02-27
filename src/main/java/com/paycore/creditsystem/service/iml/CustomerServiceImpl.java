@@ -1,5 +1,6 @@
 package com.paycore.creditsystem.service.iml;
 
+import com.paycore.creditsystem.exception.IdentityNumberAlreadyExistException;
 import com.paycore.creditsystem.exception.NotFoundException;
 import com.paycore.creditsystem.model.CreditScore;
 import com.paycore.creditsystem.model.Customer;
@@ -20,7 +21,6 @@ public class CustomerServiceImpl implements CustomerService {
     private final CustomerRepository customerRepository;
     private final CreditScoreService creditScoreService;
 
-
     @Override
     public Customer getCustomer(Integer id) {
         Optional<Customer> byId= customerRepository.findById(id);
@@ -34,25 +34,32 @@ public class CustomerServiceImpl implements CustomerService {
         CreditScore creditScore= creditScoreService.calculateCreditScore();
 
         customer.setCreditScore(creditScore);
-
+        if(customerRepository.findByIdentityNumber(customer.getIdentityNumber())!=null){
+          throw  new IdentityNumberAlreadyExistException();
+        }
        return customerRepository.save(customer);
     }
 
     @Override
-    public void deleteCustomer(Integer id) {
+    public boolean deleteCustomer(Integer id) {
         customerRepository.delete(getCustomer(id));
+        return true;
     }
 
     @Override
-    public void updateCustomer(Integer id,Customer customer) {
+    public Customer updateCustomer(Integer id, Customer customer) {
         getCustomer(id);
         customer.setId(id);
         customerRepository.save(customer);
+        return customer;
     }
 
     @Override
     public Customer getCustomerByIdentityNumber(String identityNumber) {
         Customer customer=customerRepository.findByIdentityNumber(identityNumber);
+        if (customer==null){
+           throw new NotFoundException("Customer that has this identity number  ");
+        }
         return customer;
     }
 }

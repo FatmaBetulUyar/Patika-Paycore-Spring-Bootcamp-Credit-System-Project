@@ -1,8 +1,10 @@
 package com.paycore.creditsystem.service.iml;
 
+import com.paycore.creditsystem.exception.IdentityNumberAlreadyExistException;
 import com.paycore.creditsystem.exception.NotFoundException;
 import com.paycore.creditsystem.model.CreditScore;
 import com.paycore.creditsystem.model.Customer;
+import com.paycore.creditsystem.model.dto.CustomerDto;
 import com.paycore.creditsystem.model.mapper.CustomerMapper;
 import com.paycore.creditsystem.repository.CustomerRepository;
 import com.paycore.creditsystem.service.CreditScoreService;
@@ -63,36 +65,72 @@ class CustomerServiceImplTest {
 
     @Test
     void addCustomer_successful() {
+
+        // expected data init
+      CustomerDto customerDto=new CustomerDto("12345678","Betul","UYAR",7.500F,"05004004040");
+      Customer expectedCustomer=new Customer(1,"12345678","Betul","UYAR",7.500F,"05004004040",null,null);
+      CreditScore expectedCreditScore=new CreditScore(1,1000,expectedCustomer);
+
+        // stub - when
+        when(creditScoreService.calculateCreditScore()).thenReturn(expectedCreditScore);
+        when(customerRepository.findByIdentityNumber(any())).thenReturn(null);
+        when(customerRepository.save(any())).thenReturn(expectedCustomer);
+
+        //then
+      Customer actualCustomer=customerService.addCustomer(customerDto);
+      assertEquals(expectedCustomer,actualCustomer);
+    }
+    @Test
+    void addCustomer_fail_customer_already_exist(){
+        CustomerDto customerDto=new CustomerDto("12345678","Betul","UYAR",7.500F,"05004004040");
         Customer expectedCustomer=new Customer(1,"12345678","Betul","UYAR",7.500F,"05004004040",null,null);
-        Integer calculatedCreditScore=1000;
-        CreditScore expectedCreditScore=new CreditScore(1,1000,expectedCustomer);
 
-//        when(customerRepository.findById(any())).thenReturn(Optional.of(expectedCustomer));
-//        when(creditScoreService.getCreditScoreByCustomerIdentityNumber(any())).thenReturn(expectedCreditScore.getCreditScore());
+        when(customerRepository.findByIdentityNumber(any())).thenReturn(expectedCustomer);
 
-//        Customer actualCustomer=customerService.getCustomer(1);
-//        assertEquals(expectedCustomer,actualCustomer);
-//        when(customerRepository.save(expectedCustomer)).thenReturn(expectedCustomer);
-//
-//        customerService.addCustomer(CustomerMapper.toDto(expectedCustomer));
-//        Customer byId=customerRepository.getById(1);
-//        Assert.assertEquals(expectedCustomer,byId);
-//
-//        verify(customerRepository,times(1)).save(expectedCustomer);
+        assertThrows(IdentityNumberAlreadyExistException.class,
+                () -> {
+                    Customer actualCustomer=customerService.addCustomer(customerDto);
+                }
+        );
+    }
+    @Test
+    void deleteCustomer_successful() {
+        Customer expectedCustomer=new Customer(1,"12345678","Betul","UYAR",7.500F,"05004004040",null,null);
 
+        when(customerRepository.findById(any())).thenReturn(Optional.of(expectedCustomer));
+        doNothing().when(customerRepository).delete(any());
 
-//        Passenger expectedPassenger = new Passenger(1, "Passenger1", "Lastname1", "Male", 25, "05554443322", "passenger1@mail.com");
-//
-//        // stub - when
-//        when(passengerRepository.save(expectedPassenger)).thenReturn(expectedPassenger);
-//
-//        // then
-//        passengerService.addPassenger(expectedPassenger);
-////        Passenger byId = passengerRepository.getById(1);
-////
-////        Assert.assertEquals(expectedPassenger, byId);
-//
-//        verify(passengerRepository, times(1)).save(expectedPassenger);
+        customerService.deleteCustomer(1);
+        verify(customerRepository, times(1)).delete(expectedCustomer);
+    }
+    @Test
+    void updateCustomer() {
+        Customer actualCustomer=new Customer(1,"12345678","Betul","UYAR",7.500F,"05004004040",null,null);
+        Customer updatedCustomer=new Customer(1,"12345678","Fatma","UYAR",7.500F,"05004004040",null,null);
+
+        assertNotEquals(actualCustomer,updatedCustomer);
+    }
+
+    @Test
+    void getCustomerByIdentityNumber_successful() {
+        Customer expectedCustomer=new Customer(1,"12345678","Betul","UYAR",7.500F,"05004004040",null,null);
+
+        when(customerRepository.findByIdentityNumber("12345678")).thenReturn(expectedCustomer);
+
+        Customer actualCustomer=customerService.getCustomerByIdentityNumber("12345678");
+
+        assertEquals(expectedCustomer,actualCustomer);
+    }
+    @Test
+    void getCustomerByIdentityNumber_identity_number_not_found(){
+        when(customerRepository.findByIdentityNumber(any())).thenReturn(null);
+
+        assertThrows(NotFoundException.class,
+                () -> {
+                    Customer actualCustomer=customerService.getCustomerByIdentityNumber("12345678");
+                }
+        );
 
     }
+
 }

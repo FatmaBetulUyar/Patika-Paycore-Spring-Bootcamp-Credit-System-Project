@@ -9,9 +9,9 @@ public interface CustomerService {
 
     Customer addCustomer(CustomerDto customer);
 
-    void deleteCustomer(Integer id);
+    boolean deleteCustomer(Integer id);
 
-    void updateCustomer(Integer id,Customer customer);
+    Customer updateCustomer(Integer id, Customer customer);
 
     Customer getCustomerByIdentityNumber(String identityNumber);
 }
