@@ -18,7 +18,7 @@ public class CustomerDto {
 
     @Column(unique = true)
     @NotBlank(message = "Identity Number can not be null!")
-    //@Pattern(regexp = "^[1-9]{1}[0-9]{9}[02468]{1}$",message = "Identity Number is not valid!")
+    @Pattern(regexp = "^[1-9]{1}[0-9]{9}[02468]{1}$",message = "Identity Number is not valid!")
     private String identityNumber;
 
     @NotBlank(message = "First Name can not be null!")
