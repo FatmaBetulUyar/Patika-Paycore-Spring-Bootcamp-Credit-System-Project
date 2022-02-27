@@ -7,7 +7,7 @@
 <p>Writing a <b>Restful Application</b> for a credit application system, which will take the credit application requests and return the loan result to the customer according to the relevant criteria, using the  <b>Spring Boot framework </b> and optionally writing the frontend</p>
 <h4>✏️ APPLICATION FORM & RESULT </h4>
 <div>
-<img src="src/main/resources/static/assets/Form.png" style="width:400px; margin-left:400px ;margin-top:30px">
+<img src="src/main/resources/static/assets/Form.png" style="width:400px; margin-left:400px; margin-top:30px">
 
 <img src="src/main/resources/static/assets/Response.png" style="width:400px;margin-left:400px ;margin-top:30px">
 </div>
@@ -16,10 +16,9 @@
 <h4>📝  UML DIAGRAM & DATABASE DIAGRAM</h4> 
 
 <div>
-<img src="src/main/resources/static/assets/uml_diagram.png" style="width:330px; height: auto ;margin-left:400px ; margin-top:30px ">
-
-
 <img src="src/main/resources/static/assets/database.png" style="width:350px; height: auto ;margin-left:400px ; margin-top:30px " >
+<img src="src/main/resources/static/assets/uml.png" style="width:330px; height: auto ;margin-left:400px ; margin-top:30px ">
+
 </div>
 <h4>📝 REQUİREMENTS</h4>
 <ol>
