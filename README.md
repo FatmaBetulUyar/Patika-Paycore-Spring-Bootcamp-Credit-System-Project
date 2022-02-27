@@ -13,14 +13,14 @@
 </div>
 
 
-<h4>📝  UML DIAGRAM</h4> 
+<h4>📝  UML DIAGRAM & DATABASE DIAGRAM</h4> 
 
+<div>
 <img src="src/main/resources/static/assets/uml_diagram.png" style="width:330px; height: auto ;margin-left:400px ; margin-top:30px ">
 
-<h4>📝 DATABASE DIAGRAM</h4> 
 
 <img src="src/main/resources/static/assets/database.png" style="width:350px; height: auto ;margin-left:400px ; margin-top:30px " >
-
+</div>
 <h4>📝 REQUİREMENTS</h4>
 <ol>
 <li>The user's <b>identity number, name-surname, monthly income and telephone </b> information are obtained, <br>
