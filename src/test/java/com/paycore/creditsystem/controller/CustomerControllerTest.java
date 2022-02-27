@@ -78,12 +78,12 @@ class CustomerControllerTest {
     @Test
     void addCustomer() throws Exception {
         List<Customer> expectedCustomers=getTestCustomers();
-        Customer expectedCustomer=new Customer(1,"12345678987","Betul","UYAR",9000.0F,"05703838323",null,null);
+        Customer expectedCustomer=new Customer(1,"17428249782","Betul","UYAR",9000.0F,"05703838323",null,null);
         expectedCustomers.add(expectedCustomer);
 
         ObjectWriter objectWriter=new ObjectMapper().writer().withDefaultPrettyPrinter();
         String expectedCustomerJsonStr=objectWriter.writeValueAsString(expectedCustomer);
-        when(customerService.addCustomer(CustomerMapper.toDto(expectedCustomer))).thenReturn(expectedCustomer);
+        when(customerService.addCustomer(any())).thenReturn(any());
 
         MockHttpServletResponse response=mvc.perform(post("/api/customer/add")
                 .accept(MediaType.APPLICATION_JSON)
