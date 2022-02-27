@@ -5,6 +5,19 @@
 
 <h3>📚 SUBJECT OF PROJECT </h3>
 <p>Writing a <b>Restful Application</b> for a credit application system, which will take the credit application requests and return the loan result to the customer according to the relevant criteria, using the  <b>Spring Boot framework </b> and optionally writing the frontend</p>
+<h3>📚 GETTING STARTED </h3>
+For build backend
+<ol>
+<li>Create a new database ' bootcamp_creditProject_db ' in Postgresql</li>
+<li>Update Postgresql user and password in application.properties</li></ol>
+<p>For Frontend</p>
+```
+npm install
+```
+```
+npm start
+```
+
 <h4>✏️ APPLICATION FORM & RESULT </h4>
 <div>
 <img src="src/main/resources/static/assets/Form.png" style="width:400px; margin-left:400px; margin-top:30px">
@@ -84,4 +97,4 @@ I used ReactJs because it is a very powerful framework with its flexible structu
 </ul>
 <h4>📝 ENDPOINTS </h4>
 <img src="src/main/resources/static/assets/swagger_endpoints.png">
-<h4>📝 ARCHITECTURE </h4>
+
