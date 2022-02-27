@@ -8,9 +8,9 @@
 <h3>📚 GETTING STARTED </h3>
 For build backend
 <ol>
-<li>Create a new database ' bootcamp_creditProject_db ' in Postgresql</li>
-<li>Update Postgresql user and password in application.properties</li></ol>
-<p>For Frontend => src/main/resources/FrontWebApp</p>
+<li><b>Create a new database</b> ' bootcamp_creditProject_db ' in Postgresql</li>
+<li>Update Postgresql<b> user</b>  and <b>password</b> in <b>application.properties</b></li></ol>
+<p>For Frontend ➡️  <b>src/main/resources/FrontWebApp</b></p>
 
 ```
 npm install
@@ -96,6 +96,38 @@ I used ReactJs because it is a very powerful framework with its flexible structu
 <li><b>Bootstrap</b><p>I used it for convenience for design</p></li>
 <li><b>Axios</b><p>I used it to pull data from API</p></li>
 </ul>
+<h4>📝 PROJECT HIERARCHY </h4>
+<div style="align-items:center; display: flex;  flex-direction: row; justify-content:space-evenly ">
+<div><img src="src/main/resources/static/assets/folders.png" style="width:300px; height: auto ; margin-top:30px "></div>
+<div> LAYERED ARCHITECTURE PATTERN
+<ul>
+<li>controller</li>
+<li>exception</li>
+<li>model</li>
+<li>repository</li>
+<li>service</li>
+</ul>
+I used layered architecture pattern because
+<ol>
+<li>Separating codes into layers; simplifies management,</li>
+<li>Speeds up the change process,</li>
+<li>Provides a flexible and customizable structure,</li>
+<li>Provides ease of maintenance,</li>
+<li>Allows layers to be updated independently</li>
+</ol>
+</div>
+</div>
+
+
 <h4>📝 ENDPOINTS </h4>
 <img src="src/main/resources/static/assets/swagger_endpoints.png">
 
+<h4>📝 Some Notes</h4>
+<ul>
+<li>I used <I>Math.Random()</I> to calculate the Credit Score</li>
+<li>I defined some custom exception like InsufficientCreditScore and added <I>Generic exception</I> for exception handling.</li>
+<li>When credit application has been made, I printed a message about application details to the console.</li>
+<li>I writed unit tests for services and controllers.The <I>code coverage</I>  percentage of my project is <I>over 80</I></li>
+<li>I defined some <I>DTO's</I> and custom <I>Mapper Classes</I></li>
+<li>I used the <I>Identity Number regex</I>, so you have to entire valid identity number</li>
+</ul>
