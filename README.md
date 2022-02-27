@@ -10,7 +10,8 @@ For build backend
 <ol>
 <li>Create a new database ' bootcamp_creditProject_db ' in Postgresql</li>
 <li>Update Postgresql user and password in application.properties</li></ol>
-<p>For Frontend</p>
+<p>For Frontend => src/main/resources/FrontWebApp</p>
+
 ```
 npm install
 ```
