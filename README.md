@@ -6,9 +6,9 @@
 <h3>📚 SUBJECT OF PROJECT </h3>
 <p>Writing a <b>Restful Application</b> for a credit application system, which will take the credit application requests and return the loan result to the customer according to the relevant criteria, using the  <b>Spring Boot framework </b> and optionally writing the frontend</p>
 <h4>✏️ APPLICATION FORM </h4>
-<img src="src/main/resources/static/assets/form.png" style="width:400px; margin-left:400px ;margin-top:30px">
+<img src="src/main/resources/static/assets/Form.png" style="width:400px; margin-left:400px ;margin-top:30px">
 <h4>✏️ RESULT </h4>
-<img src="src/main/resources/static/assets/response.png" style="width:400px;margin-left:400px ;margin-top:30px">
+<img src="src/main/resources/static/assets/Response.png" style="width:400px;margin-left:400px ;margin-top:30px">
 
 <h4>📝  UML DIAGRAM</h4> 
 
